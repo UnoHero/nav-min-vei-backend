@@ -5,10 +5,11 @@ const port = 3001
 const mongoose = require("mongoose")
 
 app.get("/hent/:name", async (req, res) => {
+    
     const data = await test(req.params.name)
     console.log(req.params)
     console.log(data)
-    res.send(data)
+    res.status(202).send(data)
 })
 
 const dbURI = "mongodb+srv://Test:Passord1@minveimain.pinxpui.mongodb.net/?retryWrites=true&w=majority"
@@ -37,7 +38,7 @@ async function test(name){
     console.log(result);
     console.log(allDocuments)
 
-    return {result, allDocuments, results}
+    return {result2 : result, allDocuments, results}
   } finally {
     await client.close()
   }
