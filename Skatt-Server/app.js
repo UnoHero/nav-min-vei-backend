@@ -38,7 +38,5 @@ async function test(){
   } finally {
     await client.close()
   }
-
-    //await dbURI.find(); // no query
 }
   
