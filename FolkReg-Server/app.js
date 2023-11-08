@@ -25,17 +25,17 @@ async function test(name){
     
     // connects to FolkReg collection in database
     const database = client.db("Min-Vei-main")
-    const skatteetatten = database.collection("FolkReg")
+    const folkereg = database.collection("FolkReg")
 
     // Query for everything with the name "test"
     const query = { name : name }
     const query2 = { name : {"$regex": `.*${name}.*`, "$options": "i" } }
 
     // Execute query
-    const result = await skatteetatten.findOne(query)
-    const results = await skatteetatten.find(query2).toArray()
+    const result = await folkereg.findOne(query)
+    const results = await folkereg.find(query2).toArray()
     //Finds all documents in collection
-    const allDocuments = await skatteetatten.find().toArray()
+    const allDocuments = await folkereg.find().toArray()
     // Print the document returned by findOne()
     console.log(result);
     console.log(allDocuments)

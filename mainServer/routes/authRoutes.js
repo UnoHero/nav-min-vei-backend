@@ -1,6 +1,7 @@
 const express = require("express")
 
 //in the "{}" write the different things fron controllers...
+/*
 const {
     getNmae,
 
@@ -15,3 +16,5 @@ router.get("/", getName)
 router.get("/")
 
 module.exports = router
+
+*/
