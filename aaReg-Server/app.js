@@ -25,17 +25,17 @@ async function test(name){
     
     // connects to aa-reg collection in database
     const database = client.db("Min-Vei-main")
-    const skatteetatten = database.collection("AA-reg")
+    const aareg = database.collection("AA-reg")
 
     // Query for everything with the name "test"
     const query = { name : name }
     const query2 = { name : {"$regex": `.*${name}.*`, "$options": "i" } }
 
     // Execute query
-    const result = await skatteetatten.findOne(query)
-    const results = await skatteetatten.find(query2).toArray()
+    const result = await aareg.findOne(query)
+    const results = await aareg.find(query2).toArray()
     //Finds all documents in collection
-    const allDocuments = await skatteetatten.find().toArray()
+    const allDocuments = await aareg.find().toArray()
     // Print the document returned by findOne()
     console.log(result);
     console.log(allDocuments)
