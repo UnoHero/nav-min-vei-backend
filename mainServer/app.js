@@ -8,9 +8,9 @@ const app = express();
 const port = process.env.PORT_MAIN;
 
 app.get("/hent/:name", async (req, res) => {
-  const SkattResponse = await fetch(`http://localhost:3001/hent/${req.params.name}`)
-  const FolkRegResponse = await fetch(`http://localhost:3002/hent/${req.params.name}`)
-  const AARegResponse = await fetch(`http://localhost:3002/hent/${req.params.name}`)
+  const SkattResponse = await fetch(`http://localhost:${process.env.PORT_SKATT}/hent/${req.params.name}`)
+  const FolkRegResponse = await fetch(`http://localhost:${process.env.PORT_FOLKREG}/hent/${req.params.name}`)
+  const AARegResponse = await fetch(`http://localhost:${process.env.PORT_AAREG}/hent/${req.params.name}`)
   const SkattStatus = SkattResponse.status
   const FolkRegStatus = FolkRegResponse.status
   const AARegStatus = AARegResponse.status
