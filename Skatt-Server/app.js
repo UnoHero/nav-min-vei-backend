@@ -5,10 +5,14 @@ const port = 3000
 const mongoose = require("mongoose")
 
 app.get("/hent/:name", async (req, res) => {
-    const data = await test(req.params.name)
+    const response = await fetch(`http://localhost:3001/hent/${req.params.name}`)
+    const status = response.status
+    const data = await response.json()
+    console.log(status)
     console.log(req.params)
     console.log(data)
     res.send(data)
+    res.status(202)
 })
 
 const dbURI = "mongodb+srv://Test:Passord1@minveimain.pinxpui.mongodb.net/?retryWrites=true&w=majority"
@@ -16,7 +20,7 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true})
   .then((result) => app.listen(port))
   .catch((err) => console.log(err));
 
-
+/*
 async function test(name){
   const client = new MongoClient(dbURI)
   try {
@@ -42,4 +46,4 @@ async function test(name){
     await client.close()
   }
 }
-  
+*/
