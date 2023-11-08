@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const { MongoClient } = require("mongodb")
-//const authRoutes = require('./routes/authRoutes');
+const authRoutes = require('./routes/authRoutes');
 //const cookieParser = require('cookie-parser');
 const app = express();
 const port = 3000;
