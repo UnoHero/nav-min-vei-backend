@@ -14,7 +14,8 @@
     "nodemon": ""
   },
   "scripts": {
-    "start": "node app.js"
+    "start": "node ./mainServer/app.js",
+    "dev": "nodemon ./mainServer/app.js"
   },
   "name": "nav_database",
   "version": "",
