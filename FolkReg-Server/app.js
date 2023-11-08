@@ -1,7 +1,8 @@
+require('dotenv').config()
 const express = require("express")
 const { MongoClient } = require("mongodb")
 const app = express()
-const port = 3002
+const port = process.env.PORT_FOLKREG
 const mongoose = require("mongoose")
 
 // waiting on get request
@@ -13,7 +14,7 @@ app.get("/hent/:name", async (req, res) => {
 })
 
 // connect to mongoDB
-const dbURI = "mongodb+srv://Test:Passord1@minveimain.pinxpui.mongodb.net/?retryWrites=true&w=majority"
+const dbURI = process.env.MONGO_URI
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true})
   .then((result) => app.listen(port))
   .catch((err) => console.log(err));

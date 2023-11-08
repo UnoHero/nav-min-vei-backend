@@ -1,12 +1,11 @@
-//require('dotenv').config()
-
+require('dotenv').config()
 const express = require('express');
 const mongoose = require('mongoose');
 const { MongoClient } = require("mongodb")
 const authRoutes = require('./routes/authRoutes');
 //const cookieParser = require('cookie-parser');
 const app = express();
-const port = 3000;
+const port = process.env.PORT_MAIN;
 
 app.get("/hent/:name", async (req, res) => {
   const SkattResponse = await fetch(`http://localhost:3001/hent/${req.params.name}`)
@@ -30,7 +29,7 @@ app.get("/hent/:name", async (req, res) => {
 })
 
 // database connection
-const dbURI = 'mongodb+srv://Test:Passord1@minveimain.pinxpui.mongodb.net/?retryWrites=true&w=majority';
+const dbURI = process.env.MONGO_URI;
 
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true})
   .then((result) => app.listen(port))
