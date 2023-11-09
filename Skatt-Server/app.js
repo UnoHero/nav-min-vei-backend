@@ -38,8 +38,8 @@ async function test(name){
     //Finds all documents in collection
     const allDocuments = await skatteetatten.find().toArray()
     // Print the document returned by findOne()
-    console.log(result);
-    console.log(allDocuments)
+    //console.log(result);
+    //console.log(allDocuments)
 
     return {result, allDocuments, results}
   } finally {
