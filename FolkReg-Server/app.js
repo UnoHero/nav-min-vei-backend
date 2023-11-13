@@ -38,10 +38,10 @@ async function test(name){
     //Finds all documents in collection
     const allDocuments = await folkereg.find().toArray()
     // Print the document returned by findOne()
-    console.log(result);
-    console.log(allDocuments)
+    //console.log(result);
+    //console.log(allDocuments)
 
-    return {result2 : result, allDocuments, results}
+    return {result : result, allDocuments, results}
   } finally {
     await client.close()
   }
