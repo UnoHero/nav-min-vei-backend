@@ -7,7 +7,7 @@ const mongoose = require("mongoose")
 
 // waiting on get request
 app.get("/hent/:name", async (req, res) => {
-    const data = await test(req.params.name)
+    const data = await test(req.params.firstName)
     console.log(req.params)
     console.log(data)
     res.status(202).send(data)
@@ -20,7 +20,7 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true})
   .catch((err) => console.log(err));
 
 
-async function test(name){
+async function test(firstName){
   const client = new MongoClient(dbURI)
   try {
     
@@ -29,8 +29,8 @@ async function test(name){
     const aareg = database.collection("AA-reg")
 
     // Query for everything with the name "test"
-    const query = { name : name }
-    const query2 = { name : {"$regex": `.*${name}.*`, "$options": "i" } }
+    const query = { firstName : firstName }
+    const query2 = { firstName : {"$regex": `.*${firstName}.*`, "$options": "i" } }
 
     // Execute query
     const result = await aareg.findOne(query)

@@ -10,10 +10,10 @@ app.listen(port, () => {
   console.log('Server running on port 3000')
 })
 
-app.get("/hent/:name", async (req, res) => {
-  const SkattResponse = await fetch(`http://localhost:${process.env.PORT_SKATT}/hent/${req.params.name}`)
-  const FolkRegResponse = await fetch(`http://localhost:${process.env.PORT_FOLKREG}/hent/${req.params.name}`)
-  const AARegResponse = await fetch(`http://localhost:${process.env.PORT_AAREG}/hent/${req.params.name}`)
+app.get("/hent/:firstName", async (req, res) => {
+  const SkattResponse = await fetch(`http://localhost:${process.env.PORT_SKATT}/hent/${req.params.firstName}`)
+  const FolkRegResponse = await fetch(`http://localhost:${process.env.PORT_FOLKREG}/hent/${req.params.firstName}`)
+  const AARegResponse = await fetch(`http://localhost:${process.env.PORT_AAREG}/hent/${req.params.firstName}`)
   const SkattStatus = SkattResponse.status
   const FolkRegStatus = FolkRegResponse.status
   const AARegStatus = AARegResponse.status
