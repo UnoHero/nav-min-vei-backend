@@ -11,15 +11,22 @@ app.listen(port, () => {
 })
 
 app.get("/hent/:name", async (req, res) => {
-  const data = []
-
-  for (host in ports){
-    const response = await fetch(`http://localhost:${ports[host]}/hent/${req.params.name}`)
-    const status = response.status
-    if(status === 202){
-      const jsonData = await response.json()
-      data.push(jsonData)
-    }
-  }
+  const SkattResponse = await fetch(`http://localhost:${process.env.PORT_SKATT}/hent/${req.params.name}`)
+  const FolkRegResponse = await fetch(`http://localhost:${process.env.PORT_FOLKREG}/hent/${req.params.name}`)
+  const AARegResponse = await fetch(`http://localhost:${process.env.PORT_AAREG}/hent/${req.params.name}`)
+  const SkattStatus = SkattResponse.status
+  const FolkRegStatus = FolkRegResponse.status
+  const AARegStatus = AARegResponse.status
+  const SkattData = await SkattResponse.json()
+  const FolkRegData = await FolkRegResponse.json()
+  const AARegData = await AARegResponse.json()
+  console.log(SkattStatus)
+  console.log(FolkRegStatus)
+  console.log(AARegStatus)
+  console.log(req.params)
+  console.log(SkattData)
+  console.log(FolkRegData)
+  console.log(AARegData)
+  let data = {SkattData, FolkRegData, AARegData}
   res.status(202).send(data)
 })
