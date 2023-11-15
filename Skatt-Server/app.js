@@ -21,6 +21,28 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true})
   .catch((err) => console.log(err));
 
 
+const update = new MongoClient(dbURI)
+const db = update.db("Min-Vei-main")
+const folkReg = db.collection("FolkReg")
+
+folkReg.updateOne(
+    { _id: "6554907759dea2479643b0e7" },
+    [
+      {$set: {lastModified: "$$NOW"}}
+    ]
+
+)
+
+
+
+async function ner(){
+  let ne = await folkReg.findOne({ _id: "6554907759dea2479643b0e7" })
+  console.log(ne)
+}
+
+ner()
+
+
 async function test(name){
   const client = new MongoClient(dbURI)
   try {
