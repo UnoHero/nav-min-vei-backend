@@ -12,23 +12,27 @@ app.listen(port, () => {
 
 app.get("/hent/:firstName", async (req, res) => {
   try {
-    const [SkattResponse, FolkRegResponse, AARegResponse] = await Promise.all([
+    const [SkattResponse, FolkRegResponse, AARegResponse] = await Promise.allSettled([
       fetch(`http://localhost:${process.env.PORT_SKATT}/hent/${req.params.firstName}`),
       fetch(`http://localhost:${process.env.PORT_FOLKREG}/hent/${req.params.firstName}`),
       fetch(`http://localhost:${process.env.PORT_AAREG}/hent/${req.params.firstName}`)
     ]);
 
-    const SkattStatus = SkattResponse.status;
-    const FolkRegStatus = FolkRegResponse.status;
-    const AARegStatus = AARegResponse.status;
+    let SkattData = "";
+    let FolkRegData = "";
+    let AARegData = "";
 
-    const SkattData = await SkattResponse.json();
-    const FolkRegData = await FolkRegResponse.json();
-    const AARegData = await AARegResponse.json();
+    if (SkattResponse.status === "fulfilled") {
+      SkattData = await SkattResponse.value.json();
+    } 
 
-    console.log(SkattStatus);
-    console.log(FolkRegStatus);
-    console.log(AARegStatus);
+    if (FolkRegResponse.status === "fulfilled") {
+      FolkRegData = await FolkRegResponse.value.json();
+    } 
+
+    if (AARegResponse.status === "fulfilled") {
+      AARegData = await AARegResponse.value.json();
+    } 
     console.log(req.params);
     console.log(SkattData);
     console.log(FolkRegData);
