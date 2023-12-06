@@ -1,23 +1,38 @@
-const user = require("../models/model")
 const mongoose = require("mongoose")
 
-// get a single User
-const getUser = async (req, res) => {
-    const { id } = req.params
-  
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-      return res.status(404).json({error: 'No such user'})
-    }
-  
-    const user = await User.findById(id)
-  
-    if (!user) {
-      return res.status(404).json({error: 'No such user'})
-    }
-  
-    res.status(200).json(user)
-  }
 
-  module.exports = {
-    getUser
+module.exports.get_info = async (req, res) => {
+  try {
+    const [SkattResponse, FolkRegResponse, AARegResponse] = await Promise.allSettled([
+      fetch(`http://localhost:${process.env.PORT_SKATT}/hent/${req.params.firstName}`),
+      fetch(`http://localhost:${process.env.PORT_FOLKREG}/hent/${req.params.firstName}`),
+      fetch(`http://localhost:${process.env.PORT_AAREG}/hent/${req.params.firstName}`)
+    ]);
+
+    let SkattData = "";
+    let FolkRegData = "";
+    let AARegData = "";
+
+    if (SkattResponse.status === "fulfilled") {
+      SkattData = await SkattResponse.value.json();
+    } 
+
+    if (FolkRegResponse.status === "fulfilled") {
+      FolkRegData = await FolkRegResponse.value.json();
+    } 
+
+    if (AARegResponse.status === "fulfilled") {
+      AARegData = await AARegResponse.value.json();
+    } 
+    console.log(req.params);
+    console.log(SkattData);
+    console.log(FolkRegData);
+    console.log(AARegData);
+
+    let data = { SkattData, FolkRegData, AARegData };
+    res.status(202).send(data);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
   }
+}
