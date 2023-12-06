@@ -1,6 +1,5 @@
 const mongoose = require("mongoose")
 
-
 module.exports.get_info = async (req, res) => {
   try {
     const [SkattResponse, FolkRegResponse, AARegResponse] = await Promise.allSettled([
