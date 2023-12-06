@@ -6,7 +6,7 @@ const port = process.env.PORT_FOLKREG
 const mongoose = require("mongoose")
 
 // waiting on get request
-app.get("/hent/:name", async (req, res) => {
+app.get("/hent/:firstName", async (req, res) => {
     const data = await test(req.params.firstName)
     console.log(req.params)
     console.log(data)
@@ -29,19 +29,22 @@ async function test(firstName){
     const folkereg = database.collection("FolkReg")
 
     // Query for everything with the name "test"
-    const query = { firstName : firstName }
-    const query2 = { firstName : {"$regex": `.*${firstName}.*`, "$options": "i" } }
+    const query = { firstName : {"$regex": firstName, "$options": "i"} }
+    //const query2 = { firstName : {"$regex": `.*${firstName}.*`, "$options": "i" } }
 
     // Execute query
     const result = await folkereg.findOne(query)
-    const results = await folkereg.find(query2).toArray()
+    //const results = await folkereg.find(query2).toArray()
+    /*
     //Finds all documents in collection
     const allDocuments = await folkereg.find().toArray()
     // Print the document returned by findOne()
-    //console.log(result);
+    */
+    console.log(result);
     //console.log(allDocuments)
+  
 
-    return {result : result, allDocuments, results}
+    return {result, /*allDocuments, results*/}
   } finally {
     await client.close()
   }
