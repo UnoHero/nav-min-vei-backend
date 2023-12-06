@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 
 const Schema = mongoose.Schema
 
-const userSchema = new Schema ({
+const skattSchema = new Schema ({
     firstName: {
         type: String,
         required: true
@@ -16,7 +16,7 @@ const userSchema = new Schema ({
         required: true
     },
     dateOfBirth: {
-        type: Number,
+        type: String,
         required: true
     },
     country: {
@@ -27,29 +27,20 @@ const userSchema = new Schema ({
         type: String,
         required: true
     },
+    address: {
+        type: String,
+        required: true
+    },
     postalCode: {
         type: Number,
         required: true
-    },
-    address: {
-        type: Number,
-        required: true
-    },
-    relations: {
-        type: String,
-        required: false
     },
     grossIncome: {
         type: Number,
         required: true
     },
-    insurance: {
-        type: String,
-        required: false
-    },
-
 }, { timestamps: true })
 
-const finalUser = mongoose.model('user', userSchema)
+const skattUser = mongoose.model('skattUser', skattSchema)
 
-module.exports = finalUser
+module.exports = skattUser

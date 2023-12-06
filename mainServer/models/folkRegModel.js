@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 
 const Schema = mongoose.Schema
 
-const userSchema = new Schema ({
+const folkRegSchema = new Schema ({
     firstName: {
         type: String,
         required: true
@@ -15,7 +15,7 @@ const userSchema = new Schema ({
         type: String,
         required: true
     },
-    dateOfBirth: {
+    age: {
         type: Number,
         required: true
     },
@@ -27,29 +27,20 @@ const userSchema = new Schema ({
         type: String,
         required: true
     },
-    postalCode: {
-        type: Number,
+    address: {
+        type: String,
         required: true
     },
-    address: {
+    postalCode: {
         type: Number,
         required: true
     },
     relations: {
         type: String,
-        required: false
-    },
-    grossIncome: {
-        type: Number,
         required: true
     },
-    insurance: {
-        type: String,
-        required: false
-    },
-
 }, { timestamps: true })
 
-const finalUser = mongoose.model('user', userSchema)
+const folkRegUser = mongoose.model('folkRegUser', folkRegSchema)
 
-module.exports = finalUser
+module.exports = folkRegUser
