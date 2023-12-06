@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 
 const Schema = mongoose.Schema
 
-const userSchema = new Schema ({
+const aaRegSchema = new Schema ({
     firstName: {
         type: String,
         required: true
@@ -15,7 +15,7 @@ const userSchema = new Schema ({
         type: String,
         required: true
     },
-    dateOfBirth: {
+    age: {
         type: Number,
         required: true
     },
@@ -27,29 +27,20 @@ const userSchema = new Schema ({
         type: String,
         required: true
     },
-    postalCode: {
-        type: Number,
-        required: true
-    },
     address: {
-        type: Number,
+        type: String,
         required: true
     },
-    relations: {
-        type: String,
-        required: false
-    },
-    grossIncome: {
+    postalCode: {
         type: Number,
         required: true
     },
     insurance: {
         type: String,
-        required: false
+        required: true
     },
-
 }, { timestamps: true })
 
-const finalUser = mongoose.model('user', userSchema)
+const aaRegUser = mongoose.model('aaRegUser', aaRegSchema)
 
-module.exports = finalUser
+module.exports = aaRegUser

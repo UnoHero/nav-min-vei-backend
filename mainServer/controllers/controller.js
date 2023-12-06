@@ -1,4 +1,11 @@
 const mongoose = require("mongoose")
+const skattModel = require("../models/skattModel")
+const folkRegModel = require("../models/folkRegModel")
+const aaRegModel = require("../models/aaRegModel")
+const aaRegUser = require("../models/aaRegModel")
+const folkRegUser = require("../models/folkRegModel")
+const skattUser = require("../models/skattModel")
+const finalUser = require("../models/model")
 
 module.exports.get_info = async (req, res) => {
   try {
@@ -7,6 +14,7 @@ module.exports.get_info = async (req, res) => {
       fetch(`http://localhost:${process.env.PORT_FOLKREG}/hent/${req.params.firstName}`),
       fetch(`http://localhost:${process.env.PORT_AAREG}/hent/${req.params.firstName}`)
     ]);
+
 
     let SkattData = "";
     let FolkRegData = "";
@@ -23,13 +31,46 @@ module.exports.get_info = async (req, res) => {
     if (AARegResponse.status === "fulfilled") {
       AARegData = await AARegResponse.value.json();
     } 
-    console.log(req.params);
-    console.log(SkattData);
-    console.log(FolkRegData);
-    console.log(AARegData);
+    
+    let test = [SkattData, FolkRegData, AARegData]
+    let obj = []
+    try{
+      test.forEach(e => {
+        if(e == SkattData){
+          var model = skattModel
+          var user = skattUser
+        }
+        if(e == FolkRegData){
+          var model = folkRegModel
+          var user = folkRegUser
+        }
+        if(e == AARegData){
+          var model = aaRegModel
+          var user = aaRegUser
+        }
+    
+        const {firstName, middleName, lastName, dateOfBirth, country, city, address, postalCode, grossIncome, relations, insurance, _id} = e.result
 
-    let data = { SkattData, FolkRegData, AARegData };
-    res.status(202).send(data);
+        user = new model({firstName, middleName, lastName, dateOfBirth ,country, city, address, postalCode, grossIncome, relations, insurance, _id})
+        
+        obj = obj.concat(user) 
+        
+      });
+
+      var finalUserData
+
+      const {firstName, middleName, lastName, dateOfBirth, country, city, address, postalCode, grossIncome,} = obj[0]
+      const {relations} = obj[1]
+      const {insurance} = obj[2]
+      
+      finalUserData = new finalUser({firstName, middleName, lastName, dateOfBirth, country, city, address, postalCode, grossIncome, relations, insurance})
+      
+      //console.log(SkattData)
+      } catch(error){
+        console.log(error)
+      }
+    
+    res.status(202).send(finalUserData);
   } catch (error) {
     console.error(error);
     res.status(500).send("Internal Server Error");

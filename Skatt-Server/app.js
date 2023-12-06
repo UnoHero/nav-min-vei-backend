@@ -8,8 +8,8 @@ const mongoose = require("mongoose")
 // waiting on get request
 app.get("/hent/:firstName", async (req, res) => {
     const data = await test(req.params.firstName)
-    console.log(req.params)
-    console.log(data)
+    //console.log(req.params)
+    //console.log(data)
     res.status(202).send(data)
 })
 
