@@ -26,8 +26,6 @@ module.exports.get_info = async (req, res) => {
       AARegData = await AARegResponse.value.json();
     } 
     
-  
-    const {dateOfBirth, country, city, address, postalCode} = SkattData
     const {
       firstName: skattFirstName,
       middleName: skattMiddleName, 
@@ -48,7 +46,8 @@ module.exports.get_info = async (req, res) => {
       city: folkRegCity,
       address: folkRegAddress,
       postalCode: folkRegPostalCode,
-      relations} = FolkRegData
+      relations
+    } = FolkRegData
     const {
       firstName: aaRegFirstName, 
       middleName: aaRegMiddleName, 
@@ -58,7 +57,10 @@ module.exports.get_info = async (req, res) => {
       city: aaRegCity,
       address: aaRegAddress,
       postalCode: aaRegPostalCode,
-      insurance} = AARegData
+      insurance
+    } = AARegData
+
+    console.log(SkattData)
 
     let finalUserData = new finalUser({
       firstName:{
@@ -91,16 +93,16 @@ module.exports.get_info = async (req, res) => {
         folkReg: folkRegCity,
         aaReg: aaRegCity
       },
-      address:{
-        skatt: skattAddress,
-        folkReg: folkRegAddress,
-        aaReg: aaRegAddress
-      }, 
       postalCode:{
         skatt: skattPostalCode,
         folkReg: folkRegPostalCode,
         aaReg: aaRegPostalCode
       },
+      address:{
+        skatt: skattAddress,
+        folkReg: folkRegAddress,
+        aaReg: aaRegAddress
+      }, 
       grossIncome,
       relations, 
       insurance

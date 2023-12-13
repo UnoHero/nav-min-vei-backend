@@ -46,19 +46,13 @@ const userSchema = new Schema ({
         aaReg: {type: String},
     },
     relations: {
-        skatt: {type: String},
-        folkReg: {type: String},
-        aaReg: {type: String},
+        type: String
     },
     grossIncome: {
-        skatt: {type: String},
-        folkReg: {type: String},
-        aaReg: {type: String},
+        type: Number
     },
     insurance: {
-        skatt: {type: String},
-        folkReg: {type: String},
-        aaReg: {type: String},
+        type: String
     },
 }, { timestamps: true , _id : false})
 
