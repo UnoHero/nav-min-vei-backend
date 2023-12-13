@@ -4,10 +4,14 @@ const { MongoClient } = require("mongodb")
 const app = express()
 const port = process.env.PORT_SKATT
 const mongoose = require("mongoose")
+const skattModel = require("./models/skattModel")
 
 // waiting on get request
 app.get("/hent/:firstName", async (req, res) => {
-    const data = await test(req.params.firstName)
+    let data = await test(req.params.firstName)
+
+    let {firstName, middleName, lastName, dateOfBirth, country, city, address, postalCode, grossincome} = data.result
+    data = new skattModel({firstName, middleName, lastName, dateOfBirth ,country, city, address, postalCode, grossincome})
     //console.log(req.params)
     //console.log(data)
     res.status(202).send(data)
