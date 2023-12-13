@@ -4,10 +4,14 @@ const { MongoClient } = require("mongodb")
 const app = express()
 const port = process.env.PORT_AAREG
 const mongoose = require("mongoose")
+const aaRegModel = require("./models/aaRegModel")
 
 // waiting on get request
 app.get("/hent/:firstName", async (req, res) => {
-    const data = await test(req.params.firstName)
+    let data = await test(req.params.firstName)
+
+    let {firstName, middleName, lastName, dateOfBirth, country, city, address, postalCode, insurance, _id} = data.result
+    data = new aaRegModel({firstName, middleName, lastName, dateOfBirth ,country, city, address, postalCode, insurance, _id})
     //console.log(req.params)
     //console.log(data)
     res.status(202).send(data)
@@ -34,9 +38,10 @@ async function test(firstName){
 
     // Execute query
     const result = await aareg.findOne(query)
+
     //const results = await aareg.find(query2).toArray()
     //Finds all documents in collection
-    const allDocuments = await aareg.find().toArray()
+    //const allDocuments = await aareg.find().toArray()
     // Print the document returned by findOne()
     //console.log(result);
     //console.log(allDocuments)

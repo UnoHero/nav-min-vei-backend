@@ -1,10 +1,4 @@
 const mongoose = require("mongoose")
-const skattModel = require("../models/skattModel")
-const folkRegModel = require("../models/folkRegModel")
-const aaRegModel = require("../models/aaRegModel")
-const aaRegUser = require("../models/aaRegModel")
-const folkRegUser = require("../models/folkRegModel")
-const skattUser = require("../models/skattModel")
 const finalUser = require("../models/model")
 
 module.exports.get_info = async (req, res) => {
