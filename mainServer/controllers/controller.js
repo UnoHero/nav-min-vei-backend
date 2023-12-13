@@ -26,43 +26,85 @@ module.exports.get_info = async (req, res) => {
       AARegData = await AARegResponse.value.json();
     } 
     
-    let test = [SkattData, FolkRegData, AARegData]
-    let obj = []
-    try{
-      test.forEach(e => {
-        if(e == SkattData){
-          var model = skattModel
-          var user = skattUser
-        }
-        if(e == FolkRegData){
-          var model = folkRegModel
-          var user = folkRegUser
-        }
-        if(e == AARegData){
-          var model = aaRegModel
-          var user = aaRegUser
-        }
-    
-        const {firstName, middleName, lastName, dateOfBirth, country, city, address, postalCode, grossIncome, relations, insurance, _id} = e.result
+  
+    const {dateOfBirth, country, city, address, postalCode} = SkattData
+    const {
+      firstName: skattFirstName,
+      middleName: skattMiddleName, 
+      lastName: skattLastName,
+      dateOfBirth: skattDateOfBirth, 
+      country: skattCountry,
+      city: skattCity,
+      address: skattAddress,
+      postalCode: skattPostalCode,
+      grossIncome
+    } = SkattData
+    const {
+      firstName: folkRegFirstName,
+      middleName: folkRegMiddleName, 
+      lastName: folkRegLastName,
+      dateOfBirth: folkRegDateOfBirth, 
+      country: folkRegCountry,
+      city: folkRegCity,
+      address: folkRegAddress,
+      postalCode: folkRegPostalCode,
+      relations} = FolkRegData
+    const {
+      firstName: aaRegFirstName, 
+      middleName: aaRegMiddleName, 
+      lastName: aaRegLastName, 
+      dateOfBirth: aaRegDateOfBirth, 
+      country: aaRegCountry,
+      city: aaRegCity,
+      address: aaRegAddress,
+      postalCode: aaRegPostalCode,
+      insurance} = AARegData
 
-        user = new model({firstName, middleName, lastName, dateOfBirth ,country, city, address, postalCode, grossIncome, relations, insurance, _id})
-        
-        obj = obj.concat(user) 
-        
-      });
-
-      var finalUserData
-
-      const {firstName, middleName, lastName, dateOfBirth, country, city, address, postalCode, grossIncome,} = obj[0]
-      const {relations} = obj[1]
-      const {insurance} = obj[2]
-      
-      finalUserData = new finalUser({firstName, middleName, lastName, dateOfBirth, country, city, address, postalCode, grossIncome, relations, insurance})
-      
-      //console.log(SkattData)
-      } catch(error){
-        console.log(error)
-      }
+    let finalUserData = new finalUser({
+      firstName:{
+        skatt: skattFirstName,
+        folkReg: folkRegFirstName,
+        aaReg: aaRegFirstName,
+      }, 
+      middleName:{
+        skatt: skattMiddleName,
+        folkReg: folkRegMiddleName,
+        aaReg: aaRegMiddleName,
+      },
+      lastName:{
+        skatt: skattLastName,
+        folkReg: folkRegLastName,
+        aaReg: aaRegLastName
+      },
+      dateOfBirth:{
+        skatt: skattDateOfBirth,
+        folkReg: folkRegDateOfBirth,
+        aaReg: aaRegDateOfBirth
+      }, 
+      country:{
+        skatt: skattCountry,
+        folkReg: folkRegCountry,
+        aaReg: aaRegCountry
+      }, 
+      city:{
+        skatt: skattCity,
+        folkReg: folkRegCity,
+        aaReg: aaRegCity
+      },
+      address:{
+        skatt: skattAddress,
+        folkReg: folkRegAddress,
+        aaReg: aaRegAddress
+      }, 
+      postalCode:{
+        skatt: skattPostalCode,
+        folkReg: folkRegPostalCode,
+        aaReg: aaRegPostalCode
+      },
+      grossIncome,
+      relations, 
+      insurance
+    })
     
     res.status(202).send(finalUserData);
   } catch (error) {
