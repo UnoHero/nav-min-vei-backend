@@ -9,9 +9,14 @@ const skattModel = require("./models/skattModel")
 // waiting on get request
 app.get("/hent/:id", async (req, res) => {
     let data = await test(req.params.id)
-    let {firstName, middleName, lastName, dateOfBirth, country, city, address, postalCode, grossIncome} = data.result
+    try{
+      let {firstName, middleName, lastName, dateOfBirth, country, city, address, postalCode, grossIncome} = data.result
     data = new skattModel({firstName, middleName, lastName, dateOfBirth ,country, city, address, postalCode, grossIncome})
     res.status(202).send(data)
+    }catch(error){
+      res.status(400).send("Cannot find user with specified id: " + req.params.id)
+    }
+    
 })
 
 
