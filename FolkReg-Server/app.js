@@ -7,15 +7,10 @@ const mongoose = require("mongoose")
 const FolkRegModel = require("./models/folkRegModel")
 
 // waiting on get request
-app.get("/hent/:firstName", async (req, res) => {
-    let data = await test(req.params.firstName)
-
-    let {firstName, middleName, lastName, dateOfBirth, country, city, address, postalCode, relations, insurance, _id} = data.result
-
-    data = new FolkRegModel({firstName, middleName, lastName, dateOfBirth ,country, city, address, postalCode, relations, insurance, _id})
-
-    //console.log(req.params)
-    //console.log(data)
+app.get("/hent/:id", async (req, res) => {
+    let data = await test(req.params.id)
+    let {firstName, middleName, lastName, dateOfBirth, country, city, address, postalCode, relations, insurance} = data.result
+    data = new FolkRegModel({firstName, middleName, lastName, dateOfBirth ,country, city, address, postalCode, relations, insurance})
     res.status(202).send(data)
 })
 
@@ -26,7 +21,7 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true})
   .catch((err) => console.log(err));
 
 
-async function test(firstName){
+async function test(id){
   const client = new MongoClient(dbURI)
   try {
     
@@ -34,23 +29,12 @@ async function test(firstName){
     const database = client.db("Min-Vei-main")
     const folkereg = database.collection("FolkReg")
 
-    // Query for everything with the name "test"
-    const query = { firstName : {"$regex": firstName, "$options": "i"} }
-    //const query2 = { firstName : {"$regex": `.*${firstName}.*`, "$options": "i" } }
+    // Query for everything with the id "id"
+    const query = { id : Number(id) }
 
     // Execute query
     const result = await folkereg.findOne(query)
-    //const results = await folkereg.find(query2).toArray()
-    /*
-    //Finds all documents in collection
-    const allDocuments = await folkereg.find().toArray()
-    // Print the document returned by findOne()
-    */
-    //console.log(result);
-    //console.log(allDocuments)
-  
-
-    return {result, /*allDocuments, results*/}
+    return {result}
   } finally {
     await client.close()
   }

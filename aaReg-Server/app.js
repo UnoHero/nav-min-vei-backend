@@ -7,13 +7,10 @@ const mongoose = require("mongoose")
 const aaRegModel = require("./models/aaRegModel")
 
 // waiting on get request
-app.get("/hent/:firstName", async (req, res) => {
-    let data = await test(req.params.firstName)
-
-    let {firstName, middleName, lastName, dateOfBirth, country, city, address, postalCode, insurance, _id} = data.result
-    data = new aaRegModel({firstName, middleName, lastName, dateOfBirth ,country, city, address, postalCode, insurance, _id})
-    //console.log(req.params)
-    //console.log(data)
+app.get("/hent/:id", async (req, res) => {
+    let data = await test(req.params.id)
+    let {firstName, middleName, lastName, dateOfBirth, country, city, address, postalCode, insurance} = data.result
+    data = new aaRegModel({firstName, middleName, lastName, dateOfBirth ,country, city, address, postalCode, insurance})
     res.status(202).send(data)
 })
 
@@ -24,7 +21,7 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true})
   .catch((err) => console.log(err));
 
 
-async function test(firstName){
+async function test(id){
   const client = new MongoClient(dbURI)
   try {
     
@@ -33,20 +30,12 @@ async function test(firstName){
     const aareg = database.collection("AA-reg")
 
     // Query for everything with the name "test"
-    const query = { firstName : {"$regex": firstName, "$options": "i"} }
-    //const query2 = { firstName : {"$regex": `.*${firstName}.*`, "$options": "i" } }
+    const query = { id : Number(id) }
 
     // Execute query
     const result = await aareg.findOne(query)
 
-    //const results = await aareg.find(query2).toArray()
-    //Finds all documents in collection
-    //const allDocuments = await aareg.find().toArray()
-    // Print the document returned by findOne()
-    //console.log(result);
-    //console.log(allDocuments)
-
-    return {result, /*allDocuments, results*/}
+    return {result}
   } finally {
     await client.close()
   }

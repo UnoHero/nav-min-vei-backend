@@ -39,7 +39,7 @@ const aaRegSchema = new Schema ({
         type: String,
         required: true
     },
-}, { timestamps: true })
+}, { timestamps: true, _id : false })
 
 const aaRegUser = mongoose.model('aaRegUser', aaRegSchema)
 

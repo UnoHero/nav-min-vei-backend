@@ -7,13 +7,10 @@ const mongoose = require("mongoose")
 const skattModel = require("./models/skattModel")
 
 // waiting on get request
-app.get("/hent/:firstName", async (req, res) => {
-    let data = await test(req.params.firstName)
-
+app.get("/hent/:id", async (req, res) => {
+    let data = await test(req.params.id)
     let {firstName, middleName, lastName, dateOfBirth, country, city, address, postalCode, grossincome} = data.result
     data = new skattModel({firstName, middleName, lastName, dateOfBirth ,country, city, address, postalCode, grossincome})
-    //console.log(req.params)
-    //console.log(data)
     res.status(202).send(data)
 })
 
@@ -25,7 +22,7 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true})
   .catch((err) => console.log(err));
 
 
-async function test(firstName){
+async function test(id){
   const client = new MongoClient(dbURI)
   try {
     
@@ -33,21 +30,11 @@ async function test(firstName){
     const skatteetatten = database.collection("Skatteetaten")
 
     // Query for everything with the name "test"
-    const query = { firstName : {"$regex": firstName, "$options": "i"} }
-    //const query2 = { firstName : {"$regex": `.*${firstName}.*`, "$options": "i" } }
+    const query = { id : Number(id) }
 
     // Execute query
     const result = await skatteetatten.findOne(query)
-    //const results = await skatteetatten.find(query2).toArray()
-    /*
-    //Finds all documents in collection
-    const allDocuments = await skatteetatten.find().toArray()
-    // Print the document returned by findOne()
-    //console.log(result);
-    //console.log(allDocuments)
-    */
-
-    return {result, /*allDocuments, results*/}
+    return {result}
   } finally {
     await client.close()
   }

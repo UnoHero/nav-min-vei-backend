@@ -39,7 +39,7 @@ const skattSchema = new Schema ({
         type: Number,
         required: true
     },
-}, { timestamps: true })
+}, { timestamps: true, _id : false })
 
 const skattUser = mongoose.model('skattUser', skattSchema)
 

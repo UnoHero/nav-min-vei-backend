@@ -39,7 +39,7 @@ const folkRegSchema = new Schema ({
         type: String,
         required: true
     },
-}, { timestamps: true })
+}, { timestamps: true, _id : false })
 
 const folkRegUser = mongoose.model('folkRegUser', folkRegSchema)
 
