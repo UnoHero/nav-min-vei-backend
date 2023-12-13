@@ -3,52 +3,64 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const userSchema = new Schema ({
-    firstName: {
-        type: String,
-        required: true
+    firstName:{
+        skatt: {type: String},
+        folkReg: {type: String},
+        aaReg: {type: String},
     },
-    middleName: {
-        type: String,
-        required: false
-    },
-    lastName: {
-        type: String,
-        required: true
-    },
+    middleName:
+    {
+        skatt: {type: String},
+        folkReg: {type: String},
+        aaReg: {type: String},
+    }, 
+    lastName: 
+    {
+        skatt: {type: String},
+        folkReg: {type: String},
+        aaReg: {type: String},
+    }, 
     dateOfBirth: {
-        type: Number,
-        required: true
+        skatt: {type: Number},
+        folkReg: {type: Number},
+        aaReg: {type: Number},
     },
     country: {
-        type: String,
-        required: true
+        skatt: {type: String},
+        folkReg: {type: String},
+        aaReg: {type: String},
     },
     city: {
-        type: String,
-        required: true
+        skatt: {type: String},
+        folkReg: {type: String},
+        aaReg: {type: String},
     },
     postalCode: {
-        type: Number,
-        required: true
+        skatt: {type: Number},
+        folkReg: {type: Number},
+        aaReg: {type: Number},
     },
     address: {
-        type: Number,
-        required: true
+        skatt: {type: String},
+        folkReg: {type: String},
+        aaReg: {type: String},
     },
     relations: {
-        type: String,
-        required: false
+        skatt: {type: String},
+        folkReg: {type: String},
+        aaReg: {type: String},
     },
     grossIncome: {
-        type: Number,
-        required: true
+        skatt: {type: String},
+        folkReg: {type: String},
+        aaReg: {type: String},
     },
     insurance: {
-        type: String,
-        required: false
+        skatt: {type: String},
+        folkReg: {type: String},
+        aaReg: {type: String},
     },
-
-}, { timestamps: true })
+}, { timestamps: true , _id : false})
 
 const finalUser = mongoose.model('user', userSchema)
 
