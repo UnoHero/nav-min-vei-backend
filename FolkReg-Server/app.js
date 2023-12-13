@@ -4,10 +4,16 @@ const { MongoClient } = require("mongodb")
 const app = express()
 const port = process.env.PORT_FOLKREG
 const mongoose = require("mongoose")
+const FolkRegModel = require("./models/folkRegModel")
 
 // waiting on get request
 app.get("/hent/:firstName", async (req, res) => {
-    const data = await test(req.params.firstName)
+    let data = await test(req.params.firstName)
+
+    let {firstName, middleName, lastName, dateOfBirth, country, city, address, postalCode, relations, insurance, _id} = data.result
+
+    data = new FolkRegModel({firstName, middleName, lastName, dateOfBirth ,country, city, address, postalCode, relations, insurance, _id})
+
     //console.log(req.params)
     //console.log(data)
     res.status(202).send(data)
