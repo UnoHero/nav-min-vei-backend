@@ -1,14 +1,12 @@
-const mongoose = require("mongoose")
 const finalUser = require("../models/model")
 
 module.exports.get_info = async (req, res) => {
   try {
     const [SkattResponse, FolkRegResponse, AARegResponse] = await Promise.allSettled([
-      fetch(`http://localhost:${process.env.PORT_SKATT}/user/${req.params.id}`),
-      fetch(`http://localhost:${process.env.PORT_FOLKREG}/user/${req.params.id}`),
-      fetch(`http://localhost:${process.env.PORT_AAREG}/user/${req.params.id}`)
+    fetch(`http://localhost:${process.env.PORT_SKATT}/user/${req.params.id}`),
+    fetch(`http://localhost:${process.env.PORT_FOLKREG}/user/${req.params.id}`),
+    fetch(`http://localhost:${process.env.PORT_AAREG}/user/${req.params.id}`)
     ]);
-
 
     let SkattData = "";
     let FolkRegData = "";
@@ -111,6 +109,6 @@ module.exports.get_info = async (req, res) => {
     res.status(202).send(finalUserData);
   } catch (error) {
     console.error(error);
-    res.status(500).send("Internal Server Error");
+    res.status(500).send(error);
   }
 }
