@@ -7,7 +7,7 @@ const mongoose = require("mongoose")
 const FolkRegModel = require("./models/folkRegModel")
 
 // waiting on get request
-app.get("/hent/:id", async (req, res) => {
+app.get("/user/:id", async (req, res) => {
     let data = await test(req.params.id)
     try{
       let {firstName, middleName, lastName, dateOfBirth, country, city, address, postalCode, relations, insurance} = data.result

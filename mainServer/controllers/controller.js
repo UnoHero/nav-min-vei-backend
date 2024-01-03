@@ -4,9 +4,9 @@ const finalUser = require("../models/model")
 module.exports.get_info = async (req, res) => {
   try {
     const [SkattResponse, FolkRegResponse, AARegResponse] = await Promise.allSettled([
-      fetch(`http://localhost:${process.env.PORT_SKATT}/hent/${req.params.id}`),
-      fetch(`http://localhost:${process.env.PORT_FOLKREG}/hent/${req.params.id}`),
-      fetch(`http://localhost:${process.env.PORT_AAREG}/hent/${req.params.id}`)
+      fetch(`http://localhost:${process.env.PORT_SKATT}/user/${req.params.id}`),
+      fetch(`http://localhost:${process.env.PORT_FOLKREG}/user/${req.params.id}`),
+      fetch(`http://localhost:${process.env.PORT_AAREG}/user/${req.params.id}`)
     ]);
 
 
