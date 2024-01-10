@@ -13,15 +13,38 @@ module.exports.get_info = async (req, res) => {
     let AARegData = "";
 
     if (SkattResponse.status === "fulfilled") {
-      SkattData = await SkattResponse.value.json();
+      console.log("skatt status: " + SkattResponse.value.status)
+      if(SkattResponse.value.status === 202){
+        SkattData = await SkattResponse.value.json();
+      }
+      if (SkattResponse.value.status === 400){
+        const err = await SkattResponse.value.text()
+        throw Error(err);
+      }
     } 
 
     if (FolkRegResponse.status === "fulfilled") {
-      FolkRegData = await FolkRegResponse.value.json();
+      console.log("folkreg status: " +FolkRegResponse.value.status)
+      if(FolkRegResponse.value.status === 202){
+        FolkRegData = await FolkRegResponse.value.json();
+      }
+      if (FolkRegResponse.value.status === 400){
+        const err = await FolkRegResponse.value.text()
+        throw Error(err);
+      }
+      
     } 
 
     if (AARegResponse.status === "fulfilled") {
-      AARegData = await AARegResponse.value.json();
+      console.log("aareg status: " + AARegResponse.value.status)
+      if(AARegResponse.value.status === 202){
+        AARegData = await AARegResponse.value.json();
+      }
+      if (AARegResponse.value.status === 400){
+        const err = await AARegResponse.value.text()
+        throw Error(err);
+      }
+      
     } 
     
     const {
@@ -57,8 +80,6 @@ module.exports.get_info = async (req, res) => {
       postalCode: aaRegPostalCode,
       insurance
     } = AARegData
-
-    console.log(SkattData)
 
     let finalUserData = new finalUser({
       firstName:{
@@ -106,9 +127,10 @@ module.exports.get_info = async (req, res) => {
       insurance
     })
     
+    
     res.status(202).send(finalUserData);
   } catch (error) {
-    console.error(error);
-    res.status(500).send(error);
+    console.log(error);
+    res.status(400).send({error: error.message})
   }
 }
