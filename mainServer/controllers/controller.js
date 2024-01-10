@@ -14,38 +14,22 @@ module.exports.get_info = async (req, res) => {
 
     if (SkattResponse.status === "fulfilled") {
       console.log("skatt status: " + SkattResponse.value.status)
-      if(SkattResponse.value.status === 202){
-        SkattData = await SkattResponse.value.json();
-      }
-      if (SkattResponse.value.status === 400){
-        const err = await SkattResponse.value.text()
-        throw Error(err);
-      }
+      responsHandler(SkattResponse, SkattData)
+      return
     } 
 
     if (FolkRegResponse.status === "fulfilled") {
-      console.log("folkreg status: " +FolkRegResponse.value.status)
-      if(FolkRegResponse.value.status === 202){
-        FolkRegData = await FolkRegResponse.value.json();
-      }
-      if (FolkRegResponse.value.status === 400){
-        const err = await FolkRegResponse.value.text()
-        throw Error(err);
-      }
-      
+      console.log("folkreg status: " + FolkRegResponse.value.status)
+      responsHandler(FolkRegResponse, FolkRegData)
+      return  
     } 
 
     if (AARegResponse.status === "fulfilled") {
       console.log("aareg status: " + AARegResponse.value.status)
-      if(AARegResponse.value.status === 202){
-        AARegData = await AARegResponse.value.json();
-      }
-      if (AARegResponse.value.status === 400){
-        const err = await AARegResponse.value.text()
-        throw Error(err);
+        responsHandler(AARegResponse, AARegData)
+        return
       }
       
-    } 
     
     const {
       firstName: skattFirstName,
@@ -132,5 +116,16 @@ module.exports.get_info = async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(400).send({error: error.message})
+  }
+
+  async function responsHandler(response, dataObj) {
+    if(response.value.status === 202){
+      dataObj = await response.value.json();
+    }
+    if (response.value.status >= 400){
+      const err = await response.value.text()
+      console.log(err);
+      res.status(response.value.status).send({error: err})
+    }
   }
 }
