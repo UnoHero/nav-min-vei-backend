@@ -12,42 +12,53 @@ module.exports.get_info = async (req, res) => {
     let FolkRegData = "";
     let AARegData = "";
 
-    if (SkattResponse.status === "fulfilled") {
-      console.log("skatt status: " + SkattResponse.value.status)
-      if(SkattResponse.value.status === 202){
-        SkattData = await SkattResponse.value.json();
+    if(SkattResponse.value.ok){
+      if (SkattResponse.status === "fulfilled") {
+        console.log("skatt status: " + SkattResponse.value.status)
+        if(SkattResponse.value.status === 202){
+          SkattData = await SkattResponse.value.json();
+        }
+        if (SkattResponse.value.status >= 400){
+          const err = await SkattResponse.value.text()
+          console.log(err);
+          res.status(SkattResponse.value.status).send({error: err})
+        }
       }
-      if (SkattResponse.value.status >= 400){
-        const err = await SkattResponse.value.text()
-        console.log(err);
-        res.status(SkattResponse.value.status).send({error: err})
-      }
-    } 
-
-    if (FolkRegResponse.status === "fulfilled") {
-      console.log("folkreg status: " + FolkRegResponse.value.status)
-      if(FolkRegResponse.value.status === 202){
-        FolkRegData = await FolkRegResponse.value.json();
-      }
-      if (FolkRegResponse.value.status >= 400){
-        const err = await FolkRegResponse.value.text()
-        console.log(err);
-        res.status(FolkRegResponse.value.status).send({error: err})
-      }
-    } 
-
-    if (AARegResponse.status === "fulfilled") {
-      console.log("aareg status: " + AARegResponse.value.status)
-      if(AARegResponse.value.status === 202){
-        AARegData = await AARegResponse.value.json();
-      }
-      if (AARegResponse.value.status >= 400){
-        const err = await AARegResponse.value.text()
-        console.log(err);
-        res.status(AARegResponse.value.status).send({error: err})
-      }
+    } else{
+      console.log("NOT OK")
     }
-      
+    if(FolkRegResponse.value.ok){
+      console.log("OK")
+      if (FolkRegResponse.status === "fulfilled") {
+        console.log("folkreg status: " + FolkRegResponse.value.status)
+        if(FolkRegResponse.value.status === 202){
+          FolkRegData = await FolkRegResponse.value.json();
+        }
+        if (FolkRegResponse.value.status >= 400){
+          const err = await FolkRegResponse.value.text()
+          console.log(err);
+          res.status(FolkRegResponse.value.status).send({error: err})
+        }
+      } 
+    } else{
+      console.log("NOT OK")
+    }
+    if(AARegResponse.value.ok){
+      console.log("OK")
+      if (AARegResponse.status === "fulfilled") {
+        console.log("aareg status: " + AARegResponse.value.status)
+        if(AARegResponse.value.status === 202){
+          AARegData = await AARegResponse.value.json();
+        }
+        if (AARegResponse.value.status >= 400){
+          const err = await AARegResponse.value.text()
+          console.log(err);
+          res.status(AARegResponse.value.status).send({error: err})
+        }
+      }
+    } else{
+      console.log("NOT OK")
+    } 
     
     const {
       firstName: skattFirstName,
