@@ -12,9 +12,13 @@
     "mongoose": "^7.6.3",
     "nodemailer": "^6.9.7",
     "nodemon": "^3.0.1",
-    "validator": "^13.11.0"
+    "sequelize-cli": "^6.6.2",
+    "validator": "^13.11.0",
+    "wait-on": "^7.2.0"
   },
   "scripts": {
+    "side": "concurrently \"npm:skatt\" \"npm:folk\" \"npm:aareg\"",
+    "test": "cross-env NODE_ENV=test jest --testTimeout=10000 --watch ",
     "main": "nodemon ./mainServer/app.js",
     "skatt": "nodemon ./Skatt-Server/app.js",
     "folk": "nodemon ./FolkReg-Server/app.js",
@@ -23,7 +27,6 @@
     "front": "cd ../nav-min-vei-frontend && npm run start",
     "all": "concurrently \"npm:dev\" \"npm:front\"",
     "inst": "concurrently \"npm install\" \"cd ../nav-min-vei-frontend && npm isntall\""
-
   },
   "name": "nav_database",
   "version": "",
@@ -37,6 +40,15 @@
   "homepage": "https://github.com/UnoHero/nav-min-vei-backend#readme",
   "description": "",
   "devDependencies": {
-    "concurrently": "^8.2.2"
+    "concurrently": "^8.2.2",
+    "cross-env": "^7.0.3",
+    "jest": "^29.7.0",
+    "supertest": "^6.3.4"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "coveragePathIgnorePatterns": [
+      "./node_modules/"
+    ]
   }
 }

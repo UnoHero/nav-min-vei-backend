@@ -13,3 +13,5 @@ app.listen(port, () => {
 })
 
 app.use(authRoutes)
+
+module.exports = app
