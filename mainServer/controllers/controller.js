@@ -14,21 +14,39 @@ module.exports.get_info = async (req, res) => {
 
     if (SkattResponse.status === "fulfilled") {
       console.log("skatt status: " + SkattResponse.value.status)
-      responsHandler(SkattResponse, SkattData)
-      return
+      if(SkattResponse.value.status === 202){
+        SkattData = await SkattResponse.value.json();
+      }
+      if (SkattResponse.value.status >= 400){
+        const err = await SkattResponse.value.text()
+        console.log(err);
+        res.status(SkattResponse.value.status).send({error: err})
+      }
     } 
 
     if (FolkRegResponse.status === "fulfilled") {
       console.log("folkreg status: " + FolkRegResponse.value.status)
-      responsHandler(FolkRegResponse, FolkRegData)
-      return  
+      if(FolkRegResponse.value.status === 202){
+        FolkRegData = await FolkRegResponse.value.json();
+      }
+      if (FolkRegResponse.value.status >= 400){
+        const err = await FolkRegResponse.value.text()
+        console.log(err);
+        res.status(FolkRegResponse.value.status).send({error: err})
+      }
     } 
 
     if (AARegResponse.status === "fulfilled") {
       console.log("aareg status: " + AARegResponse.value.status)
-        responsHandler(AARegResponse, AARegData)
-        return
+      if(AARegResponse.value.status === 202){
+        AARegData = await AARegResponse.value.json();
       }
+      if (AARegResponse.value.status >= 400){
+        const err = await AARegResponse.value.text()
+        console.log(err);
+        res.status(AARegResponse.value.status).send({error: err})
+      }
+    }
       
     
     const {
@@ -118,9 +136,11 @@ module.exports.get_info = async (req, res) => {
     res.status(400).send({error: error.message})
   }
 
+  /*
   async function responsHandler(response, dataObj) {
     if(response.value.status === 202){
       dataObj = await response.value.json();
+      return dataObj
     }
     if (response.value.status >= 400){
       const err = await response.value.text()
@@ -128,4 +148,5 @@ module.exports.get_info = async (req, res) => {
       res.status(response.value.status).send({error: err})
     }
   }
+  */
 }

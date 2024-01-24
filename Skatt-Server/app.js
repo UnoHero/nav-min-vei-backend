@@ -8,7 +8,7 @@ const skattModel = require("./models/skattModel")
 
 // waiting on get request
 app.get("/user/:id", async (req, res) => {
-    let data = await test(req.params.id)
+    let data = await getUser(req.params.id)
     try{
       let {firstName, middleName, lastName, dateOfBirth, country, city, address, postalCode, grossIncome} = data.result
     data = new skattModel({firstName, middleName, lastName, dateOfBirth ,country, city, address, postalCode, grossIncome})
@@ -27,7 +27,7 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true})
   .catch((err) => console.log(err));
 
 
-async function test(id){
+async function getUser(id){
   const client = new MongoClient(dbURI)
   try {
     
@@ -35,7 +35,7 @@ async function test(id){
     const skatteetatten = database.collection("Skatteetaten")
 
     // Query for everything with the name "test"
-    const query = { id : Number(id) }
+    const query = { id : id }
 
     // Execute query
     const result = await skatteetatten.findOne(query)

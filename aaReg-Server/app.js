@@ -8,7 +8,7 @@ const aaRegModel = require("./models/aaRegModel")
 
 // waiting on get request
 app.get("/user/:id", async (req, res) => {
-    let data = await test(req.params.id)
+    let data = await getUser(req.params.id)
     try{
       let {firstName, middleName, lastName, dateOfBirth, country, city, address, postalCode, insurance} = data.result
       data = new aaRegModel({firstName, middleName, lastName, dateOfBirth ,country, city, address, postalCode, insurance})
@@ -25,7 +25,7 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true})
   .catch((err) => console.log(err));
 
 
-async function test(id){
+async function getUser(id){
   const client = new MongoClient(dbURI)
   try {
     
@@ -34,7 +34,7 @@ async function test(id){
     const aareg = database.collection("AA-reg")
 
     // Query for everything with the name "test"
-    const query = { id : Number(id) }
+    const query = { id : id }
 
     // Execute query
     const result = await aareg.findOne(query)
