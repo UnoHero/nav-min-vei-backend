@@ -19,7 +19,11 @@
     "skatt": "nodemon ./Skatt-Server/app.js",
     "folk": "nodemon ./FolkReg-Server/app.js",
     "aareg": "nodemon ./aaReg-Server/app.js",
-    "dev": "concurrently \"npm:main\" \"npm:skatt\" \"npm:folk\" \"npm:aareg\""
+    "dev": "concurrently \"npm:main\" \"npm:skatt\" \"npm:folk\" \"npm:aareg\"",
+    "front": "cd ../nav-min-vei-frontend && npm run start",
+    "all": "concurrently \"npm:dev\" \"npm:front\"",
+    "inst": "concurrently \"npm install\" \"cd ../nav-min-vei-frontend && npm isntall\""
+
   },
   "name": "nav_database",
   "version": "",
