@@ -8,7 +8,7 @@ const FolkRegModel = require("./models/folkRegModel")
 
 // waiting on get request
 app.get("/user/:id", async (req, res) => {
-    let data = await test(req.params.id)
+    let data = await getUser(req.params.id)
     try{
       let {firstName, middleName, lastName, dateOfBirth, country, city, address, postalCode, relations, insurance} = data.result
       data = new FolkRegModel({firstName, middleName, lastName, dateOfBirth ,country, city, address, postalCode, relations, insurance})
@@ -26,7 +26,7 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true})
   .catch((err) => console.log(err));
 
 
-async function test(id){
+async function getUser(id){
   const client = new MongoClient(dbURI)
   try {
     
@@ -35,7 +35,7 @@ async function test(id){
     const folkereg = database.collection("FolkReg")
 
     // Query for everything with the id "id"
-    const query = { id : Number(id) }
+    const query = { id : id }
 
     // Execute query
     const result = await folkereg.findOne(query)
