@@ -11,18 +11,20 @@ module.exports.get_info = async (req, res) => {
     let SkattData = "";
     let FolkRegData = "";
     let AARegData = "";
+    let data = {}
 
     if(SkattResponse.status === "fulfilled"){
       if (SkattResponse.value.ok) {
         //console.log("skatt status: " + SkattResponse.value.status)
         if(SkattResponse.value.status === 202){
           SkattData = await SkattResponse.value.json();
+          data.SkattData = {...SkattData}
         }
       } else {
           const err = await SkattResponse.value.text()
           console.log(err);
-          res.status(SkattResponse.value.status).send({error: err})
-          return
+          //res.status(SkattResponse.value.status).send({error: err})
+          
       }
     } else{
       console.log("NOT OK")
@@ -34,11 +36,12 @@ module.exports.get_info = async (req, res) => {
         //console.log("folkreg status: " + FolkRegResponse.value.status)
         if(FolkRegResponse.value.status === 202){
           FolkRegData = await FolkRegResponse.value.json();
+          data.FolkRegData = {...FolkRegData}
         }
       } else{
           const err = await FolkRegResponse.value.text()
           console.log(err);
-          res.status(FolkRegResponse.value.status).send({error: err})
+          //res.status(FolkRegResponse.value.status).send({error: err})
       }
     } else{
       console.log("NOT OK")
@@ -49,96 +52,67 @@ module.exports.get_info = async (req, res) => {
         //console.log("aareg status: " + AARegResponse.value.status)
         if(AARegResponse.value.status === 202){
           AARegData = await AARegResponse.value.json();
+          data.AARegData = {...AARegData}
         }
       } else{
           const err = await AARegResponse.value.text()
           console.log(err);
-          res.status(AARegResponse.value.status).send({error: err})
+          //res.status(AARegResponse.value.status).send({error: err})
       }
     } else{
       console.log("NOT OK")
     } 
+
+    if(!data.SkattData & !data.FolkRegData & !data.AARegData){
+      throw Error("Cant find user with specified id")
+    }
     
-    const {
-      firstName: skattFirstName,
-      middleName: skattMiddleName, 
-      lastName: skattLastName,
-      dateOfBirth: skattDateOfBirth, 
-      country: skattCountry,
-      city: skattCity,
-      address: skattAddress,
-      postalCode: skattPostalCode,
-      grossIncome
-    } = SkattData
-    const {
-      firstName: folkRegFirstName,
-      middleName: folkRegMiddleName, 
-      lastName: folkRegLastName,
-      dateOfBirth: folkRegDateOfBirth, 
-      country: folkRegCountry,
-      city: folkRegCity,
-      address: folkRegAddress,
-      postalCode: folkRegPostalCode,
-      relations
-    } = FolkRegData
-    const {
-      firstName: aaRegFirstName, 
-      middleName: aaRegMiddleName, 
-      lastName: aaRegLastName, 
-      dateOfBirth: aaRegDateOfBirth, 
-      country: aaRegCountry,
-      city: aaRegCity,
-      address: aaRegAddress,
-      postalCode: aaRegPostalCode,
-      insurance
-    } = AARegData
 
     let finalUserData = new finalUser({
       firstName:{
-        skatt: skattFirstName,
-        folkReg: folkRegFirstName,
-        aaReg: aaRegFirstName,
+        skatt: data?.SkattData?.firstName,
+        folkReg: data?.FolkRegData?.firstName,
+        aaReg: data?.AARegData?.firstName,
       }, 
       middleName:{
-        skatt: skattMiddleName,
-        folkReg: folkRegMiddleName,
-        aaReg: aaRegMiddleName,
+        skatt: data?.SkattData?.middleName,
+        folkReg: data?.FolkRegData?.middleName,
+        aaReg: data?.AARegData?.middleName,
       },
       lastName:{
-        skatt: skattLastName,
-        folkReg: folkRegLastName,
-        aaReg: aaRegLastName
+        skatt: data?.SkattData?.lastName,
+        folkReg: data?.FolkRegData?.lastName,
+        aaReg: data?.AARegData?.lastName
       },
       dateOfBirth:{
-        skatt: skattDateOfBirth,
-        folkReg: folkRegDateOfBirth,
-        aaReg: aaRegDateOfBirth
+        skatt: data?.SkattData?.dateOfBirth,
+        folkReg: data?.FolkRegData?.dateOfBirth,
+        aaReg: data?.AARegData?.dateOfBirth
       }, 
       country:{
-        skatt: skattCountry,
-        folkReg: folkRegCountry,
-        aaReg: aaRegCountry
+        skatt: data?.SkattData?.country,
+        folkReg: data?.FolkRegData?.country,
+        aaReg: data?.AARegData?.country
       }, 
       city:{
-        skatt: skattCity,
-        folkReg: folkRegCity,
-        aaReg: aaRegCity
+        skatt: data?.SkattData?.city,
+        folkReg: data?.FolkRegData?.city,
+        aaReg: data?.AARegData?.city
       },
       postalCode:{
-        skatt: skattPostalCode,
-        folkReg: folkRegPostalCode,
-        aaReg: aaRegPostalCode
+        skatt: data?.SkattData?.postalCode,
+        folkReg: data?.FolkRegData?.postalCode,
+        aaReg: data?.AARegData?.postalCode
       },
       address:{
-        skatt: skattAddress,
-        folkReg: folkRegAddress,
-        aaReg: aaRegAddress
+        skatt: data?.SkattData?.address,
+        folkReg: data?.FolkRegData?.address,
+        aaReg: data?.AARegData?.address
       }, 
-      grossIncome,
-      relations, 
-      insurance
+      grossIncome: data?.SkattData?.grossIncome,
+      relations: data?.FolkRegData?.relations, 
+      insurance: data?.AARegData?.insurance
     })
-    
     
     res.status(202).send(finalUserData);
   } catch (error) {
