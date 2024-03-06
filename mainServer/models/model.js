@@ -21,9 +21,9 @@ const userSchema = new Schema ({
         aaReg: {type: String},
     }, 
     dateOfBirth: {
-        skatt: {type: Number},
-        folkReg: {type: Number},
-        aaReg: {type: Number},
+        skatt: {type: String},
+        folkReg: {type: String},
+        aaReg: {type: String},
     },
     country: {
         skatt: {type: String},
