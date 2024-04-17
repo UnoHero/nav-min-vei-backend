@@ -4,44 +4,44 @@ const Schema = mongoose.Schema
 
 const userSchema = new Schema ({
     firstName:{
-        skattReg: {type: String},
+        skatt: {type: String},
         folkReg: {type: String},
         aaReg: {type: String},
     },
     middleName:
     {
-        skattReg: {type: String},
+        skatt: {type: String},
         folkReg: {type: String},
         aaReg: {type: String},
     }, 
     lastName: 
     {
-        skattReg: {type: String},
+        skatt: {type: String},
         folkReg: {type: String},
         aaReg: {type: String},
     }, 
     dateOfBirth: {
-        skattReg: {type: String},
+        skatt: {type: String},
         folkReg: {type: String},
         aaReg: {type: String},
     },
     country: {
-        skattReg: {type: String},
+        skatt: {type: String},
         folkReg: {type: String},
         aaReg: {type: String},
     },
     city: {
-        skattReg: {type: String},
+        skatt: {type: String},
         folkReg: {type: String},
         aaReg: {type: String},
     },
     postalCode: {
-        skattReg: {type: Number},
+        skatt: {type: Number},
         folkReg: {type: Number},
         aaReg: {type: Number},
     },
     address: {
-        skattReg: {type: String},
+        skatt: {type: String},
         folkReg: {type: String},
         aaReg: {type: String},
     },

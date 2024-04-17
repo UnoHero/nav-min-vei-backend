@@ -70,42 +70,42 @@ module.exports.get_info = async (req, res) => {
 
     let finalUserData = new finalUser({
       firstName:{
-        skattReg: data?.SkattData?.firstName,
+        skatt: data?.SkattData?.firstName,
         folkReg: data?.FolkRegData?.firstName,
         aaReg: data?.AARegData?.firstName,
       }, 
       middleName:{
-        skattReg: data?.SkattData?.middleName,
+        skatt: data?.SkattData?.middleName,
         folkReg: data?.FolkRegData?.middleName,
         aaReg: data?.AARegData?.middleName,
       },
       lastName:{
-        skattReg: data?.SkattData?.lastName,
+        skatt: data?.SkattData?.lastName,
         folkReg: data?.FolkRegData?.lastName,
         aaReg: data?.AARegData?.lastName
       },
       dateOfBirth:{
-        skattReg: data?.SkattData?.dateOfBirth,
+        skatt: data?.SkattData?.dateOfBirth,
         folkReg: data?.FolkRegData?.dateOfBirth,
         aaReg: data?.AARegData?.dateOfBirth
       }, 
       country:{
-        skattReg: data?.SkattData?.country,
+        skatt: data?.SkattData?.country,
         folkReg: data?.FolkRegData?.country,
         aaReg: data?.AARegData?.country
       }, 
       city:{
-        skattReg: data?.SkattData?.city,
+        skatt: data?.SkattData?.city,
         folkReg: data?.FolkRegData?.city,
         aaReg: data?.AARegData?.city
       },
       postalCode:{
-        skattReg: data?.SkattData?.postalCode,
+        skatt: data?.SkattData?.postalCode,
         folkReg: data?.FolkRegData?.postalCode,
         aaReg: data?.AARegData?.postalCode
       },
       address:{
-        skattReg: data?.SkattData?.address,
+        skatt: data?.SkattData?.address,
         folkReg: data?.FolkRegData?.address,
         aaReg: data?.AARegData?.address
       }, 
