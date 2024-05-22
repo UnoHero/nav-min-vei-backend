@@ -46,7 +46,7 @@ const userSchema = new Schema ({
         aaReg: {type: String},
     },
     relations: {
-        type: String
+        type: Array
     },
     grossIncome: {
         type: Number

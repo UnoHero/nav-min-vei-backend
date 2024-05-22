@@ -36,7 +36,7 @@ const folkRegSchema = new Schema ({
         required: true
     },
     relations: {
-        type: String,
+        type: Array,
         required: true
     },
     dateOfBirth: {
